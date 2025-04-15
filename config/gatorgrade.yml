@@ -1,0 +1,476 @@
+setup: |
+  cd listsorting && poetry install
+  echo "Done installing project dependencies!"
+targets:
+  PLO1:
+    - R: 80          # Expressed as a percentage
+  PLO2:
+    - R: 80          # Expressed as a percentage
+thresholds:
+  PLO1:
+    - I: 10           # Expressed as a raw number of checks
+    - D: 15           # Expressed as a raw number of checks 
+    - R: 21           # Expressed as a raw number of checks
+    - P: 26           # Expressed as a raw number of checks
+  PLO2:
+    - I: 0           # Expressed as a raw number of checks
+    - D: 5           # Expressed as a raw number of checks
+    - R: 10           # Expressed as a raw number of checks
+    - P: 14           # Expressed as a raw number of checks
+---
+
+# perform checks on a file
+- listsorting/listsorting/experiment.py:
+    - description: Ensure that the main.py file exists in the listsorting/listsorting/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for main.py
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Create a sufficient number of docstring (i.e., multiple-line) comments in experiment.py
+      check: CountMultipleLineComments
+      options:
+        language: "Python"
+        count: 5
+        exact: false
+    - description: Create a sufficient number of single-line comments in experiment.py
+      check: CountSingleLineComments
+      options:
+        language: "Python"
+        count: 10
+        exact: false
+
+# perform checks on a file
+- listsorting/listsorting/main.py:
+    - description: Ensure that the main.py file exists in the listsorting/listsorting/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for main.py
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Create a sufficient number of docstring (i.e., multiple-line) comments in main.py
+      check: CountMultipleLineComments
+      options:
+        language: "Python"
+        count: 3
+        exact: false
+    - description: Create a sufficient number of single-line comments in main.py
+      check: CountSingleLineComments
+      options:
+        language: "Python"
+        count: 5
+        exact: false
+    - description: Conduct a doubling experiment for sorting by calling the run_sorting_algorithm_experiment_campaign
+      check: MatchFileFragment
+      options:
+        fragment: experiment.run
+        count: 1
+        exact: true
+      objectives:
+        CLO3:
+          degree:
+            - DS: "I"
+              rationale: "PLO1 pass indicates experiment campaign function called"
+            - CS: "I"
+              rationale: "PLO2 pass indicates experiment campaign function called"
+    - description: Import the tabulate module from the tabulate package
+      check: MatchFileFragment
+      options:
+        fragment: tabulate import
+        count: 1
+        exact: true
+      objectives:
+        CLO3:
+          degree:
+            - DS: "I"
+              rationale: "PLO1 pass indicates prep for displaying experimental results"
+            - CS: "I"
+              rationale: "PL02 pass indicates prep for displaying experimental results"
+    - description: Use a variable named algorithm within a function call to run a specific sorting algorithm
+      check: MatchFileFragment
+      options:
+        fragment: "algorithm,"
+        count: 1
+        exact: true
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates specific algorithm was used for sorting"
+            - CS: "I"
+              rationale: "PLO1 pass indicates specific algorithm was used for sorting"
+    - description: Confirm the accuracy of the first data table header
+      check: MatchFileFragment
+      options:
+        fragment: "Input Size"
+        count: 1
+        exact: false
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+            - CS: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+    - description: Confirm the accuracy of the second data table header
+      check: MatchFileFragment
+      options:
+        fragment: "Min time (s)"
+        count: 1
+        exact: false
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+            - CS: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+    - description: Confirm the accuracy of the third data table header
+      check: MatchFileFragment
+      options:
+        fragment: "Max time (s)"
+        count: 1
+        exact: false
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+            - CS: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+    - description: Confirm the accuracy of the fourth data table header
+      check: MatchFileFragment
+      options:
+        fragment: "Avg time (s)"
+        count: 1
+        exact: false
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accurate description of algorithm timing results"
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+            - CS: "I"
+              rationale: "PLO1 pass indicates correct use of a data structure (table) in a python program"
+
+# perform checks on a file
+- listsorting/tests/test_sorting.py:
+    - description: Ensure that the test_sorting.py file exists in the listsorting/tests/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for test_sorting.py
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Ensure that there are the right number of test cases defined in the test_sorting.py file
+      check: MatchFileFragment
+      options:
+        fragment: "test_"
+        count: 2
+        exact: false
+    - description: Create a sufficient number of docstring (i.e., multiple-line) comments in test_sorting.py
+      check: CountMultipleLineComments
+      options:
+        language: "Python"
+        count: 2
+        exact: false
+    - description: Create a sufficient number of single-line comments in test_sorting.py
+      check: CountSingleLineComments
+      options:
+        language: "Python"
+        count: 2
+        exact: false
+
+# perform checks on a file
+- listsorting/listsorting/sorting.py:
+    - description: Ensure that the sorting.py file exists in the listsorting/listsorting/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for sorting.py
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Create a sufficient number of docstring (i.e., multiple-line) comments in sorting.py
+      check: CountMultipleLineComments
+      options:
+        language: "Python"
+        count: 2
+        exact: false
+    - description: Create a sufficient number of single-line comments in sorting.py
+      check: CountSingleLineComments
+      options:
+        language: "Python"
+        count: 2
+        exact: false
+    - description: Implement seven algorithms to support different types of sorting
+      check: MatchFileFragment
+      options:
+        fragment: return
+        count: 7
+        exact: false
+      objectives:
+        CLO2:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates sorting algorithms of various efficiency were implemented"
+            - CS: "I"
+              rationale: "PLO1 pass indicates sorting algorithms of various efficiency were implemented"
+
+# perform checks on a file
+- listsorting/tests/test_sorting.py:
+    - description: Ensure that the test_sorting.py file exists in the listsorting/tests/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for test_sorting.py
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Ensure that there are the right number of test cases defined in the test_sorting.py file
+      check: MatchFileFragment
+      options:
+        fragment: "test_"
+        count: 2
+        exact: false
+    - description: Create a sufficient number of docstring (i.e., multiple-line) comments in test_sorting.py
+      check: CountMultipleLineComments
+      options:
+        language: "Python"
+        count: 3
+        exact: false
+    - description: Create a sufficient number of single-line comments in test_sorting.py
+      check: CountSingleLineComments
+      options:
+        language: "Python"
+        count: 2
+        exact: false
+
+# perform checks on a file
+- writing/reflection.md:
+    - description: Ensure that the reflection.md file exists in the writing/ directory
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers, and rewrite comments for the reflection
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Delete the 'Add Your Name Here' prompt in the reflection file
+      check: MatchFileFragment
+      options:
+        fragment: "Add Your Name Here"
+        count: 0
+        exact: true
+    - description: Confirm that the markdown file has the correct number of headers
+      check: CountMarkdownTags
+      options:
+        tag: heading
+        count: 10
+        exact: false
+    - description: Confirm that the markdown file has the correct number of fenced code blocks
+      check: CountMarkdownTags
+      options:
+        tag: code_block
+        count: 5
+        exact: false
+    - description: List second of three or more research questions that can be answered empirically
+      check: MatchFileFragment
+      options:
+        fragment: "- RQ2:"
+        count: 1
+        exact: false
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates planned analysis of experimental data"
+            - CS: "I"
+              rationale: "PLO1 pass indicates planned analysis of experimental data"
+            - IM: "I"
+              rationale: "PLO2 pass indicates planned analysis of experimental data"
+    - description: List third of three or more research questions that can be answered empirically
+      check: MatchFileFragment
+      options:
+        fragment: "- RQ3:"
+        count: 1
+        exact: false
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates planned analysis of experimental data"
+            - CS: "I"
+              rationale: "PLO1 pass indicates planned analysis of experimental data"
+            - IM: "I"
+              rationale: "PLO2 pass indicates planned analysis of experimental data"
+    - description: Explain which sorting algorithm is fastest, and delete the prompt
+      check: MatchFileFragment
+      options:
+        fragment: "explain which sorting algorithm is\nfastest"
+        count: 0
+        exact: true
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates sorting algorithms were compared for time efficiency"
+            - CS: "I"
+              rationale: "PLO1 pass indicates sorting algorithms were compared for time efficiency"
+            - IM: "I"
+              rationale: "PLO2 pass indicates sorting algorithms were compared for time efficiency"
+    - description: Compute and explain by how much the fastest algorithm it is faster, and delete the prompt
+      check: MatchFileFragment
+      options:
+        fragment: ", by how much it is faster,"
+        count: 0
+        exact: true
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates doubling ratio was calculated and stated"
+            - CS: "I"
+              rationale: "PLO1 pass indicates doubling ratio was calculated and stated"
+            - IM: "I"
+              rationale: "PLO2 pass indicates doubling ratio was calculated and stated"
+    - description: Mention specific python constructs that lead to observed doubling ratio, and delete the prompt
+      check: MatchFileFragment
+      options:
+        fragment: "mentioning specific python constructs."
+        count: 0
+        exact: true
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates python constructs impacting efficiency were identified"
+            - CS: "I"
+              rationale: "PLO1 pass indicates python constructs impacting efficiency were identified"
+            - IM: "I"
+              rationale: "PLO2 pass indicates python constructs impacting efficiency were identified"
+    - description: Show fraction for calculating at least one doubling ratio for each algorithm using mathematical markdown syntax
+      check: MatchFileFragment
+      options:
+        fragment: "\\frac{"
+        count: 5
+        exact: false
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+            - IM: "I"
+              rationale: "PLO2 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+        CLO3:
+          degree:
+            - DS: "I"
+              rationale: "PLO1 pass indicates data used to characterize performance of sorting algorithms"
+            - CS: "I"
+              rationale: "PLO2 pass indicates data used to characterize performance of sorting algorithms"
+    - description: Show approximate doubling ratio for each algorithm using mathematical markdown syntax
+      check: MatchFileFragment
+      options:
+        fragment: "\\approx"
+        count: 5
+        exact: false
+      objectives:
+        CLO1:
+          degree:
+            - SE: "I"
+              rationale: "PLO1 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+            - CS: "I"
+              rationale: "PLO1 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+            - IM: "I"
+              rationale: "PLO2 pass indicates accuracy in characterizing algorithms through mathematical calculation"
+        CLO3:
+          degree:
+            - DS: "I"
+              rationale: "PLO1 pass indicates data used to characterize performance of sorting algorithms"
+            - CS: "I"
+              rationale: "PLO2 pass indicates data used to characterize performance of sorting algorithms"
+
+# run a command
+- description: Pass the source code linting and formatting checks run by ruff
+  command: cd listsorting && poetry run task ruff
+  objectives:
+    CLO5:
+      degree:
+        - SE: "D"
+          rationale: "PLO1 ruff linter pass indicates code conforms to industry standards"
+
+# run a command
+- description: Pass the type checks run by mypy
+  command: cd listsorting && poetry run task mypy
+  objectives:
+    CLO5:
+      degree:
+        - SE: "D"
+          rationale: "PLO1 mypy checks pass indicates code conforms to industry standards"
+
+# run a command
+- description: Pass the markdown linting checks run by pymarkdown
+  command: cd listsorting && poetry run task markdownlint
+  objectives:
+    CLO5:
+      degree:
+        - SE: "D"
+          rationale: "PLO1 pymarkdown pass indicates documentation conforms to industry standards"
+
+# run a command
+- description: Pass all of the Pytest test cases
+  command: cd listsorting && poetry run task test
+  objectives:
+    CLO4:
+      degree:
+        - IM: "I"
+          rationale: "PLO1 pytest pass indicates use of tools for testing and debugging"
+        - CS: "D"
+          rationale: "PLO2 pytest pass indicates use of tools for testing and debugging"
+        - SE: "I"
+          rationale: "PLO2 pytest pass indicates use of tools for testing and debugging"
+
+# count number of commits in the GitHub repository
+- description: Have at least a specific minimum of commits in repository
+  check: CountCommits
+  options:
+    count: 10
+  objectives:
+    CLO4:
+      degree:
+        - IM: "I"
+          rationale: "PLO1 commits indicates use of version control systems"
+        - CS: "D"
+          rationale: "PLO2 commits indicates use of version control systems"
+        - SE: "I"
+          rationale: "PLO2 commits indicates use of version control systems"
